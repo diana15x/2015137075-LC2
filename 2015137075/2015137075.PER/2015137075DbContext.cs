@@ -10,6 +10,7 @@ namespace _2015137075.PER
 {
     public class _2015137075DbContext : DbContext
     {
+        public DbSet<CentroAtencion> CentroAtencions { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Contrato> Contratos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
