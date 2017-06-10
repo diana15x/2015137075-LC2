@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministradorEquipo.cs" />
-    <Compile Include="AdministradorLinea.cs" />
+    <Compile Include="Enum\AdministradorEquipo.cs" />
+    <Compile Include="Enum\AdministradorLinea.cs" />
     <Compile Include="Entities\CentroAtencion.cs" />
     <Compile Include="Entities\Cliente.cs" />
     <Compile Include="Entities\Contrato.cs" />
@@ -51,17 +51,17 @@
     <Compile Include="Entities\Evaluacion.cs" />
     <Compile Include="Entities\LineaTelefonica.cs" />
     <Compile Include="Entities\Plan.cs" />
-    <Compile Include="EquipoCelular.cs" />
-    <Compile Include="EstadoEvaluacion.cs" />
+    <Compile Include="Enum\EquipoCelular.cs" />
+    <Compile Include="Enum\EstadoEvaluacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Provincia.cs" />
     <Compile Include="Entities\Trabajador.cs" />
     <Compile Include="Entities\Venta.cs" />
-    <Compile Include="TipoEvaluacion.cs" />
-    <Compile Include="TipoLinea.cs" />
-    <Compile Include="TipoPago.cs" />
-    <Compile Include="TipoPlan.cs" />
-    <Compile Include="TipoTrabajador.cs" />
+    <Compile Include="Enum\TipoEvaluacion.cs" />
+    <Compile Include="Enum\TipoLinea.cs" />
+    <Compile Include="Enum\TipoPago.cs" />
+    <Compile Include="Enum\TipoPlan.cs" />
+    <Compile Include="Enum\TipoTrabajador.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

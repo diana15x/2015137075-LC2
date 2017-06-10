@@ -8,7 +8,7 @@ namespace _2015137075.ENT
 {
     public class CentroAtencion
     {
-        public int CentroDeAtencionId { get; set; }
+        public int CentroAtencionId { get; set; }
         public string Nombre { get; set; }
 
         //Relaciones

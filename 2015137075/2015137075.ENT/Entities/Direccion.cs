@@ -17,11 +17,11 @@ namespace _2015137075.ENT
         public int DistritoId { get; set; }
         public Distrito Distrito { get; set; }
 
-        public List<CentroAtencion> CentrosdeAtencions { get; set; }
+        public List<CentroAtencion> CentrosAtencions { get; set; }
 
         public Direccion()
         {
-            CentrosdeAtencions = new List<CentroAtencion>();
+            CentrosAtencions = new List<CentroAtencion>();
 
         }
     }
