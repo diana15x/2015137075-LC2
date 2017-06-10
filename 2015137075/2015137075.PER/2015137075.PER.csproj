@@ -48,6 +48,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="2015137075DbContext.cs" />
+    <Compile Include="EntitiesConfiguration\CentroAtencionConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\ClienteConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\ContratoConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\DepartamentoConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\DireccionConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\DistritoConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\EvaluacionConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\LineaTelefonicaConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\PlanConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\ProvinciaConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\TrabajadorConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\VentaConfiguration.cs" />
     <Compile Include="Migrations\201706100431027_uno.cs" />
     <Compile Include="Migrations\201706100431027_uno.Designer.cs">
       <DependentUpon>201706100431027_uno.cs</DependentUpon>
@@ -58,6 +70,19 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CentroAtencionRepository.cs" />
+    <Compile Include="Repositories\ClienteRepository.cs" />
+    <Compile Include="Repositories\ContratoRepository.cs" />
+    <Compile Include="Repositories\DepartamentoRepository.cs" />
+    <Compile Include="Repositories\DireccionRepository.cs" />
+    <Compile Include="Repositories\DistritoRepository.cs" />
+    <Compile Include="Repositories\EvaluacionRepository.cs" />
+    <Compile Include="Repositories\LineaTelefonicaRepository.cs" />
+    <Compile Include="Repositories\PlanRepository.cs" />
+    <Compile Include="Repositories\ProvinciaRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\TrabajadorRepository.cs" />
+    <Compile Include="Repositories\VentaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -77,5 +102,6 @@
       <DependentUpon>201706100444285_dos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
