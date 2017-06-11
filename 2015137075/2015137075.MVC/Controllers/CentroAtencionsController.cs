@@ -9,19 +9,31 @@ using System.Web.Mvc;
 using _2015137075.ENT;
 using _2015137075.PER;
 using _2015137075.PER.Repositories;
+using _2015137075.ENT.IRepositories;
 
 namespace _2015137075.MVC.Controllers
 {
     public class CentroAtencionsController : Controller
     {
+        private readonly IUnityOfWork _UnityOfWork;
+
         //private _2015137075DbContext db = new _2015137075DbContext();
-        private UnityOfWork unityOfWork = UnityOfWork.Instance;
+        //private UnityOfWork unityOfWork = UnityOfWork.Instance;
+        public CentroAtencionsController(IUnityOfWork unityOfWork)
+        {
+            _UnityOfWork = unityOfWork;
+        }
+        public CentroAtencionsController()
+        {
+                
+        }
+
         // GET: CentroAtencions
         public ActionResult Index()
         {
             //var centroAtencions = db.CentroAtencions.Include(c => c.Direccion);
             //return View(centroAtencions.ToList());
-            return View(unityOfWork.CentroAtencions.GetAll());
+            return View(_UnityOfWork.CentroAtencions.GetAll());
         }
 
         // GET: CentroAtencions/Details/5
@@ -32,7 +44,7 @@ namespace _2015137075.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //CentroAtencion centroAtencion = db.CentroAtencions.Find(id);
-            CentroAtencion centroAtencion = unityOfWork.CentroAtencions.Get(id);
+            CentroAtencion centroAtencion = _UnityOfWork.CentroAtencions.Get(id);
             if (centroAtencion == null)
             {
                 return HttpNotFound();
@@ -57,9 +69,9 @@ namespace _2015137075.MVC.Controllers
             if (ModelState.IsValid)
             {
                 //db.CentroAtencions.Add(centroAtencion);
-                unityOfWork.CentroAtencions.Add(centroAtencion);
+                _UnityOfWork.CentroAtencions.Add(centroAtencion);
                 //db.SaveChanges();
-                unityOfWork.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -75,7 +87,7 @@ namespace _2015137075.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //CentroAtencion centroAtencion = db.CentroAtencions.Find(id);
-            CentroAtencion centroAtencion = unityOfWork.CentroAtencions.Get(id);
+            CentroAtencion centroAtencion = _UnityOfWork.CentroAtencions.Get(id);
             if (centroAtencion == null)
             {
                 return HttpNotFound();
@@ -94,9 +106,9 @@ namespace _2015137075.MVC.Controllers
             if (ModelState.IsValid)
             {
                 //db.Entry(centroAtencion).State = EntityState.Modified;
-                unityOfWork.StateModified(centroAtencion);
+                _UnityOfWork.StateModified(centroAtencion);
                 //db.SaveChanges();
-                unityOfWork.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
             //ViewBag.DireccionId = new SelectList(db.Direcciones, "DireccionId", "Descripcion", centroAtencion.DireccionId);
@@ -111,7 +123,7 @@ namespace _2015137075.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //CentroAtencion centroAtencion = db.CentroAtencions.Find(id);
-            CentroAtencion centroAtencion = unityOfWork.CentroAtencions.Get(id);
+            CentroAtencion centroAtencion = _UnityOfWork.CentroAtencions.Get(id);
             if (centroAtencion == null)
             {
                 return HttpNotFound();
@@ -124,11 +136,11 @@ namespace _2015137075.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CentroAtencion centroAtencion = unityOfWork.CentroAtencions.Get(id);
+            CentroAtencion centroAtencion = _UnityOfWork.CentroAtencions.Get(id);
             //db.CentroAtencions.Remove(centroAtencion);
-            unityOfWork.CentroAtencions.Delete(centroAtencion);
+            _UnityOfWork.CentroAtencions.Delete(centroAtencion);
             //db.SaveChanges();
-            unityOfWork.SaveChanges();
+            _UnityOfWork.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -138,7 +150,7 @@ namespace _2015137075.MVC.Controllers
             if (disposing)
             {
                 //db.Dispose();
-                unityOfWork.Dispose();
+                _UnityOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

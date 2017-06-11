@@ -8,18 +8,31 @@ using System.Web;
 using System.Web.Mvc;
 using _2015137075.ENT;
 using _2015137075.PER;
+using _2015137075.ENT.IRepositories;
 
 namespace _2015137075.MVC.Controllers
 {
     public class DireccionsController : Controller
     {
-        private _2015137075DbContext db = new _2015137075DbContext();
+        private readonly IUnityOfWork _UnityOfWork;
+
+        //private _2015137075DbContext db = new _2015137075DbContext();
+
+        public DireccionsController(IUnityOfWork unityOfWork)
+        {
+            _UnityOfWork = unityOfWork;
+        }
+        public DireccionsController()
+        {
+
+        }
 
         // GET: Direccions
         public ActionResult Index()
         {
-            var direcciones = db.Direcciones.Include(d => d.Distrito);
-            return View(direcciones.ToList());
+            //var direcciones = db.Direcciones.Include(d => d.Distrito);
+            //return View(direcciones.ToList());
+            return View(_UnityOfWork.Direccions.GetAll());
         }
 
         // GET: Direccions/Details/5
@@ -29,7 +42,10 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Direccion direccion = db.Direcciones.Find(id);
+            //Direccion direccion = db.Direcciones.Find(id);
+            Direccion direccion = _UnityOfWork.Direccions.Get(id);
+
+
             if (direccion == null)
             {
                 return HttpNotFound();
@@ -40,7 +56,7 @@ namespace _2015137075.MVC.Controllers
         // GET: Direccions/Create
         public ActionResult Create()
         {
-            ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre");
+            //ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre");
             return View();
         }
 
@@ -53,12 +69,13 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Direcciones.Add(direccion);
-                db.SaveChanges();
+                //db.Direcciones.Add(direccion);
+                _UnityOfWork.Direccions.Add(direccion);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre", direccion.DistritoId);
+            //ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre", direccion.DistritoId);
             return View(direccion);
         }
 
@@ -69,12 +86,14 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Direccion direccion = db.Direcciones.Find(id);
+            //Direccion direccion = db.Direcciones.Find(id);
+            Direccion direccion = _UnityOfWork.Direccions.Get(id);
+
             if (direccion == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre", direccion.DistritoId);
+            //ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre", direccion.DistritoId);
             return View(direccion);
         }
 
@@ -87,11 +106,13 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(direccion).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(direccion).State = EntityState.Modified;
+                _UnityOfWork.StateModified(direccion);
+                //db.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre", direccion.DistritoId);
+            //ViewBag.DistritoId = new SelectList(db.Distritos, "DistritoId", "Nombre", direccion.DistritoId);
             return View(direccion);
         }
 
@@ -102,7 +123,9 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Direccion direccion = db.Direcciones.Find(id);
+            //Direccion direccion = db.Direcciones.Find(id);
+
+            Direccion direccion = _UnityOfWork.Direccions.Get(id);
             if (direccion == null)
             {
                 return HttpNotFound();
@@ -115,9 +138,15 @@ namespace _2015137075.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Direccion direccion = db.Direcciones.Find(id);
-            db.Direcciones.Remove(direccion);
-            db.SaveChanges();
+            //Direccion direccion = db.Direcciones.Find(id);
+            Direccion direccion = _UnityOfWork.Direccions.Get(id);
+            //db.Direcciones.Remove(direccion);
+            _UnityOfWork.Direccions.Delete(direccion);
+            
+
+
+            //db.SaveChanges();
+            _UnityOfWork.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -125,7 +154,8 @@ namespace _2015137075.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                _UnityOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

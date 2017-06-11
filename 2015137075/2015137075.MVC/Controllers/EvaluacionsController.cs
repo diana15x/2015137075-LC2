@@ -137,7 +137,8 @@ namespace _2015137075.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                unityOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

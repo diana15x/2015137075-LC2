@@ -8,5 +8,6 @@ namespace _2015137075.ENT.IRepositories
 {
     public interface IDistritoRepository : IRepository<Distrito>
     {
+        Distrito Get(int? id);
     }
 }

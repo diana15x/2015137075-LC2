@@ -22,8 +22,11 @@ namespace _2015137075.ENT.IRepositories
         IVentaRepository Ventas { get; }
 
         int SaveChanges();
-
-
-
+        void StateModified(CentroAtencion centroAtencion);
+        void StateModified(Cliente cliente);
+        void StateModified(Contrato contrato);
+        void StateModified(Departamento departamento);
+        void StateModified(Direccion direccion);
+        void StateModified(Distrito distrito);
     }
 }

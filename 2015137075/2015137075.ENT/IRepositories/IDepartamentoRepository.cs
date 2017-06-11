@@ -8,6 +8,6 @@ namespace _2015137075.ENT.IRepositories
 {
     public interface IDepartamentoRepository : IRepository<Departamento>
     {
-
+        Departamento Get(int? id);
     }
 }

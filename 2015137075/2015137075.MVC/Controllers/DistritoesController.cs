@@ -8,18 +8,31 @@ using System.Web;
 using System.Web.Mvc;
 using _2015137075.ENT;
 using _2015137075.PER;
+using _2015137075.ENT.IRepositories;
 
 namespace _2015137075.MVC.Controllers
 {
     public class DistritoesController : Controller
     {
-        private _2015137075DbContext db = new _2015137075DbContext();
+        private readonly IUnityOfWork _UnityOfWork;
+
+        //private _2015137075DbContext db = new _2015137075DbContext();
+
+        public DistritoesController(IUnityOfWork unityOfWork)
+        {
+            _UnityOfWork = unityOfWork;
+        }
+        public DistritoesController()
+        {
+
+        }
 
         // GET: Distritoes
         public ActionResult Index()
         {
-            var distritos = db.Distritos.Include(d => d.Provincia);
-            return View(distritos.ToList());
+            //var distritos = db.Distritos.Include(d => d.Provincia);
+            // return View(distritos.ToList());
+            return View(_UnityOfWork.Distritos.GetAll());
         }
 
         // GET: Distritoes/Details/5
@@ -29,7 +42,8 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Distrito distrito = db.Distritos.Find(id);
+            //Distrito distrito = db.Distritos.Find(id);
+            Distrito distrito = _UnityOfWork.Distritos.Get(id);
             if (distrito == null)
             {
                 return HttpNotFound();
@@ -40,7 +54,7 @@ namespace _2015137075.MVC.Controllers
         // GET: Distritoes/Create
         public ActionResult Create()
         {
-            ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre");
+            //ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre");
             return View();
         }
 
@@ -53,12 +67,15 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Distritos.Add(distrito);
-                db.SaveChanges();
+                //db.Distritos.Add(distrito);
+                _UnityOfWork.Distritos.Add(distrito);
+
+                //db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre", distrito.ProvinciaId);
+            //ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre", distrito.ProvinciaId);
             return View(distrito);
         }
 
@@ -69,12 +86,13 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Distrito distrito = db.Distritos.Find(id);
+            //Distrito distrito = db.Distritos.Find(id);
+            Distrito distrito = _UnityOfWork.Distritos.Get(id);
             if (distrito == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre", distrito.ProvinciaId);
+           // ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre", distrito.ProvinciaId);
             return View(distrito);
         }
 
@@ -87,11 +105,13 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(distrito).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(distrito).State = EntityState.Modified;
+                _UnityOfWork.StateModified(distrito);
+                //db.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre", distrito.ProvinciaId);
+            //ViewBag.ProvinciaId = new SelectList(db.Provincias, "ProvinciaId", "Nombre", distrito.ProvinciaId);
             return View(distrito);
         }
 
@@ -102,7 +122,8 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Distrito distrito = db.Distritos.Find(id);
+            //Distrito distrito = db.Distritos.Find(id);
+            Distrito distrito = _UnityOfWork.Distritos.Get(id);
             if (distrito == null)
             {
                 return HttpNotFound();
@@ -115,9 +136,13 @@ namespace _2015137075.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Distrito distrito = db.Distritos.Find(id);
-            db.Distritos.Remove(distrito);
-            db.SaveChanges();
+            //Distrito distrito = db.Distritos.Find(id);
+            Distrito distrito = _UnityOfWork.Distritos.Get(id);
+            // db.Distritos.Remove(distrito);
+            _UnityOfWork.Distritos.Delete(distrito);
+
+            //db.SaveChanges();
+            _UnityOfWork.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -125,7 +150,8 @@ namespace _2015137075.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                _UnityOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -8,17 +8,29 @@ using System.Web;
 using System.Web.Mvc;
 using _2015137075.ENT;
 using _2015137075.PER;
+using _2015137075.ENT.IRepositories;
 
 namespace _2015137075.MVC.Controllers
 {
     public class DepartamentoesController : Controller
     {
-        private _2015137075DbContext db = new _2015137075DbContext();
+        private readonly IUnityOfWork _UnityOfWork;
+
+        //private _2015137075DbContext db = new _2015137075DbContext();
+        public DepartamentoesController(IUnityOfWork unityOfWork)
+        {
+            _UnityOfWork = unityOfWork;
+        }
+        public DepartamentoesController()
+        {
+
+        }
 
         // GET: Departamentoes
         public ActionResult Index()
         {
-            return View(db.Departamentos.ToList());
+            //return View(db.Departamentos.ToList());
+            return View(_UnityOfWork.Departamentos.GetAll());
         }
 
         // GET: Departamentoes/Details/5
@@ -28,7 +40,9 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Departamento departamento = db.Departamentos.Find(id);
+            ///Departamento departamento = db.Departamentos.Find(id);
+            Departamento departamento = _UnityOfWork.Departamentos.Get(id);
+
             if (departamento == null)
             {
                 return HttpNotFound();
@@ -51,8 +65,11 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Departamentos.Add(departamento);
-                db.SaveChanges();
+                //db.Departamentos.Add(departamento);
+                _UnityOfWork.Departamentos.Add(departamento);
+
+                //db.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +83,9 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Departamento departamento = db.Departamentos.Find(id);
+            //Departamento departamento = db.Departamentos.Find(id);
+
+            Departamento departamento = _UnityOfWork.Departamentos.Get(id);
             if (departamento == null)
             {
                 return HttpNotFound();
@@ -83,8 +102,10 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(departamento).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(departamento).State = EntityState.Modified;
+                _UnityOfWork.StateModified(departamento);
+                //db.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(departamento);
@@ -97,7 +118,8 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Departamento departamento = db.Departamentos.Find(id);
+            //Departamento departamento = db.Departamentos.Find(id);
+            Departamento departamento = _UnityOfWork.Departamentos.Get(id);
             if (departamento == null)
             {
                 return HttpNotFound();
@@ -110,9 +132,12 @@ namespace _2015137075.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Departamento departamento = db.Departamentos.Find(id);
-            db.Departamentos.Remove(departamento);
-            db.SaveChanges();
+            //Departamento departamento = db.Departamentos.Find(id);
+            Departamento departamento = _UnityOfWork.Departamentos.Get(id);
+            //db.Departamentos.Remove(departamento);
+            _UnityOfWork.Departamentos.Delete(departamento);
+            //db.SaveChanges();
+            _UnityOfWork.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +145,8 @@ namespace _2015137075.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                _UnityOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

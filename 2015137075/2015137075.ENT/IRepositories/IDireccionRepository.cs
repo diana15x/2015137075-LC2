@@ -8,5 +8,6 @@ namespace _2015137075.ENT.IRepositories
 {
     public interface IDireccionRepository : IRepository<Direccion>
     {
+        Direccion Get(int? id);
     }
 }

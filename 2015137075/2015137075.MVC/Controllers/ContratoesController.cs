@@ -8,17 +8,29 @@ using System.Web;
 using System.Web.Mvc;
 using _2015137075.ENT;
 using _2015137075.PER;
+using _2015137075.ENT.IRepositories;
 
 namespace _2015137075.MVC.Controllers
 {
     public class ContratoesController : Controller
     {
-        private _2015137075DbContext db = new _2015137075DbContext();
+        private readonly IUnityOfWork _UnityOfWork;
+
+        //private _2015137075DbContext db = new _2015137075DbContext();
+        public ContratoesController(IUnityOfWork unityOfWork)
+        {
+            _UnityOfWork = unityOfWork;
+        }
+        public ContratoesController()
+        {
+
+        }
 
         // GET: Contratoes
         public ActionResult Index()
         {
-            return View(db.Contratos.ToList());
+            //return View(db.Contratos.ToList());
+            return View(_UnityOfWork.Contratos.GetAll());
         }
 
         // GET: Contratoes/Details/5
@@ -28,7 +40,9 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contrato contrato = db.Contratos.Find(id);
+            //Contrato contrato = db.Contratos.Find(id);
+            Contrato contrato = _UnityOfWork.Contratos.Get(id);
+
             if (contrato == null)
             {
                 return HttpNotFound();
@@ -51,8 +65,10 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Contratos.Add(contrato);
-                db.SaveChanges();
+                //db.Contratos.Add(contrato);
+                _UnityOfWork.Contratos.Add(contrato);
+                //db.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +82,9 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contrato contrato = db.Contratos.Find(id);
+            //Contrato contrato = db.Contratos.Find(id);
+            Contrato contrato = _UnityOfWork.Contratos.Get(id);
+
             if (contrato == null)
             {
                 return HttpNotFound();
@@ -83,8 +101,10 @@ namespace _2015137075.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(contrato).State = EntityState.Modified;
-                db.SaveChanges();
+                // db.Entry(contrato).State = EntityState.Modified;
+                _UnityOfWork.StateModified(contrato);
+                //db.SaveChanges();
+                _UnityOfWork.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(contrato);
@@ -97,7 +117,8 @@ namespace _2015137075.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contrato contrato = db.Contratos.Find(id);
+            //Contrato contrato = db.Contratos.Find(id);
+            Contrato contrato = _UnityOfWork.Contratos.Get(id);
             if (contrato == null)
             {
                 return HttpNotFound();
@@ -110,9 +131,12 @@ namespace _2015137075.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Contrato contrato = db.Contratos.Find(id);
-            db.Contratos.Remove(contrato);
-            db.SaveChanges();
+            //Contrato contrato = db.Contratos.Find(id);
+            Contrato contrato = _UnityOfWork.Contratos.Get(id);
+            //db.Contratos.Remove(contrato);
+            _UnityOfWork.Contratos.Delete(contrato);
+            //db.SaveChanges();
+            _UnityOfWork.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +144,8 @@ namespace _2015137075.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                _UnityOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
