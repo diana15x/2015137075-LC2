@@ -15,6 +15,10 @@ namespace _2015137075.PER.EntitiesConfiguration
             //Table Configurations
             ToTable("Distrito");
             HasKey(a => a.DistritoId);
+
+            HasRequired(c => c.Provincia)
+                .WithMany(c => c.Distritos)
+                .HasForeignKey(c => c.ProvinciaId);
         }
     }
 }

@@ -15,6 +15,21 @@ namespace _2015137075.PER.EntitiesConfiguration
             //Table Configurations
             ToTable("Evaluacion");
             HasKey(a => a.EvaluacionId);
+
+            HasRequired(c => c.LineaTelefonica)
+              .WithMany(c => c.Evaluaciones)
+               ;
+
+            HasRequired(c => c.Plan)
+              .WithMany(c => c.Evaluaciones)
+               ;
+
+            HasRequired(c => c.Trabajador)
+              .WithMany(c => c.Evaluaciones)
+               ;
+            HasRequired(c => c.Cliente)
+              .WithMany(c => c.Evaluaciones)
+               ;
         }
     }
 }

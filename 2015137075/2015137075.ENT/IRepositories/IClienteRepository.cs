@@ -8,5 +8,6 @@ namespace _2015137075.ENT.IRepositories
 {
     public interface IClienteRepository : IRepository<Cliente>
     {
+        Cliente Get(int? id);
     }
 }

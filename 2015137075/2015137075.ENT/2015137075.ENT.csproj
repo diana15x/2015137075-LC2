@@ -65,6 +65,7 @@
     <Compile Include="IRepositories\IProvinciaRepository.cs" />
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="IRepositories\ITrabajadorRepository.cs" />
+    <Compile Include="IRepositories\IUnityOfWork.cs" />
     <Compile Include="IRepositories\IVentaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Provincia.cs" />

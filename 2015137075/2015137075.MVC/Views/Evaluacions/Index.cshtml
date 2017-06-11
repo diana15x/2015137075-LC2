@@ -1,0 +1,58 @@
+﻿@model IEnumerable<_2015137075.ENT.Evaluacion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LineaTelefonica.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plan.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trabajador.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LineaTelefonica.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plan.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trabajador.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EvaluacionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EvaluacionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EvaluacionId })
+        </td>
+    </tr>
+}
+
+</table>

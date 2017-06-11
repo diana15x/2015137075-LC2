@@ -15,6 +15,11 @@ namespace _2015137075.PER.EntitiesConfiguration
             //Table Configurations
             ToTable("CentroAtencion");
             HasKey(a => a.CentroAtencionId);
+
+            //Relations Configuration
+            HasRequired(c => c.Direccion)
+               .WithMany(c => c.CentrosAtencions)
+               .HasForeignKey(c => c.DireccionId);
         }
     }
 }

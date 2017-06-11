@@ -8,7 +8,8 @@ namespace _2015137075.ENT.IRepositories
 {
     public interface ICentroAtencionRepository : IRepository<CentroAtencion>
     {
+        CentroAtencion Get(int? id);
     }
 
-    
+
 }

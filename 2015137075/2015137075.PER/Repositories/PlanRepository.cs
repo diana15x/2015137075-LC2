@@ -10,5 +10,13 @@ namespace _2015137075.PER.Repositories
 {
     public class PlanRepository : Repository<Plan>, IPlanRepository
     {
+        private readonly _2015137075DbContext _Context;
+
+        public PlanRepository(_2015137075DbContext context): base(context)
+        {
+            _Context = context;
+        }
+
+        
     }
 }

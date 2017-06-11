@@ -15,6 +15,11 @@ namespace _2015137075.PER.EntitiesConfiguration
             //Table Configurations
             ToTable("Direccion");
             HasKey(a => a.DireccionId);
+
+            //Relations Configuration
+
+            HasRequired(c => c.Distrito)
+              .WithMany(c => c.Direcciones);
         }
     }
 }

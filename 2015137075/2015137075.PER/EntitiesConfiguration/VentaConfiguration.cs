@@ -15,6 +15,14 @@ namespace _2015137075.PER.EntitiesConfiguration
             //Table Configurations
             ToTable("Venta");
             HasKey(a => a.VentaId);
+
+            HasRequired(c => c.CentroAtencion)
+               .WithMany(c => c.Ventas)
+                ;
+
+            HasRequired(c => c.Contrato)
+              .WithMany(c => c.Ventas)
+               ;
         }
     }
 }

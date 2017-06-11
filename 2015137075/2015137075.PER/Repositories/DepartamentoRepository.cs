@@ -10,5 +10,13 @@ namespace _2015137075.PER.Repositories
 {
     public class DepartamentoRepository : Repository<Departamento>, IDepartamentoRepository
     {
+        private readonly _2015137075DbContext _Context;
+
+        public DepartamentoRepository(_2015137075DbContext context): base(context)
+        {
+            _Context = context;
+        }
+
+        
     }
 }
